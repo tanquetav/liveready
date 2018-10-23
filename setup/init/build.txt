@@ -1,0 +1,35 @@
+# Instalei o docker, kubeadm, kubectl e kubelet
+# system enable kubelet docker
+# system start kubelet docker
+# curl -L https://git.io/getLatestIstio | sh -
+
+
+
+
+
+kubeadm init --pod-network-cidr=10.244.0.0/16
+
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+kubectl apply -f kube-flannel.yml
+
+cd ../dashboard
+
+kubectl apply -f .
+
+cd ../istio
+
+kubectl apply -f  istio-demo.yaml
+kubectl apply -f grafana.yaml
+
+kubectl label namespace default istio-injection=enabled
+
+cd ../../deploy
+
+kubectl apply -f gateway.yaml
+
+kubectl apply -f liveready-deploy-http.yaml
+
+kubectl apply -f liveready-svc.yaml

@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: liveready
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: liveready
+    spec:
+      containers:
+      - name: liveready
+        image: liveready:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/ready
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/live
+          initialDelaySeconds: 5
+          initialDelaySeconds: 5
+          periodSeconds: 5
+

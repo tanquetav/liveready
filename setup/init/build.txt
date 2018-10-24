@@ -33,3 +33,14 @@ kubectl apply -f gateway.yaml
 kubectl apply -f liveready-deploy-http.yaml
 
 kubectl apply -f liveready-svc.yaml
+
+kubectl	get svc -o  wide
+
+kubectl  describe svc liveready   
+
+
+kubectl	get pod -o  wide
+
+kubectl exec -it pod /bin/sh 
+
+
